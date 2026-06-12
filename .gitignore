@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+*.egg-info/
+
+# Manim render output (regenerable; rendered to a native-FS media dir)
+media/
+lnm_media/
+
+# Audio build intermediates (regenerable from narration + voices)
+audio_build/
+*.aiff
+*.wav
+
+# Piper voice models (large; fetched by `make voices`)
+piper_voices/*.onnx
+piper_voices/*.onnx.json
+
+# OS
+.DS_Store
+._*
+
+# Final stitched videos are tracked via Git LFS (see .gitattributes); per-scene
+# manim partials are not.

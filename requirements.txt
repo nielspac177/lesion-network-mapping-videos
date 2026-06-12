@@ -1,0 +1,8 @@
+# Pinned to the versions this series was built and validated with.
+# Install into a Python 3.12 venv: see scripts/bootstrap.sh or the README.
+manim==0.20.1
+manimpango==0.6.1
+pycairo==1.29.0
+numpy==2.4.6
+piper-tts==1.4.2
+onnxruntime==1.26.0

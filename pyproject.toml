@@ -1,0 +1,25 @@
+[project]
+name = "lnm-math-videos"
+version = "0.1.0"
+description = "A reproducible, narrated video course on the mathematics of Lesion Network Mapping — its 2025–26 critique, sensitivity/specificity, and convergence."
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.12,<3.13"
+authors = [{ name = "Niels Pacheco-Barrios" }]
+keywords = ["manim", "lesion-network-mapping", "neuroimaging", "math-visualization", "permutation-test"]
+
+dependencies = [
+    "manim==0.20.1",
+    "manimpango==0.6.1",
+    "pycairo==1.29.0",
+    "numpy==2.4.6",
+    "piper-tts==1.4.2",
+    "onnxruntime==1.26.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+# This is a content/asset project, not an importable library. `lnm_engine.py`
+# lives at the repo root and is put on PYTHONPATH by render.sh; chapter scenes
+# import it directly.
