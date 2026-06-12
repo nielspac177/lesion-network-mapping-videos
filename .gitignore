@@ -13,9 +13,12 @@ audio_build/
 *.aiff
 *.wav
 
-# Piper voice models (large; fetched by `make voices`)
+# Neural-TTS voice models (large; fetched by `make voices`)
 piper_voices/*.onnx
 piper_voices/*.onnx.json
+kokoro_models/*.onnx
+kokoro_models/*.bin
+voice_samples/
 
 # OS
 .DS_Store

@@ -7,8 +7,9 @@ ROOT="$(pwd)"
 
 echo "==> 1. System libraries (Homebrew)"
 # cairo/pango: manim render deps.  pkg-config: needed to build pycairo.
-# ffmpeg: encode/concat.  (We do NOT use Homebrew's TeX — see step 3.)
-for pkg in pkg-config cairo pango ffmpeg; do
+# ffmpeg: encode/concat.  espeak-ng: phonemizer for the Kokoro voice.
+# (We do NOT use Homebrew's TeX, see step 3.)
+for pkg in pkg-config cairo pango ffmpeg espeak-ng; do
   brew list "$pkg" >/dev/null 2>&1 || brew install "$pkg"
 done
 
@@ -29,8 +30,11 @@ else
   echo "      then re-run.  dvisvgm + babel-english are mandatory for MathTex."
 fi
 
-echo "==> 4. Piper neural-TTS voices"
-"$ROOT/.venv/bin/python" -m piper.download_voices en_US-lessac-high en_US-ryan-high \
+echo "==> 4. Neural-TTS voices (Kokoro is the default narrator; Piper is a fallback)"
+mkdir -p "$ROOT/kokoro_models"
+curl -sL -o "$ROOT/kokoro_models/kokoro-v1.0.onnx" https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0/kokoro-v1.0.onnx || true
+curl -sL -o "$ROOT/kokoro_models/voices-v1.0.bin"   https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0/voices-v1.0.bin || true
+"$ROOT/.venv/bin/python" -m piper.download_voices en_US-ryan-high en_US-lessac-high \
   --download-dir "$ROOT/piper_voices" || true
 
 echo "==> 5. ffmpeg / x265 note"

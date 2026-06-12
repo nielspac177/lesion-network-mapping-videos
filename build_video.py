@@ -49,8 +49,10 @@ def main():
     ap.add_argument("--quality", default="480p15", help="manim quality dir, e.g. 480p15 or 1080p60")
     ap.add_argument("--media", default="media", help="manim media dir")
     ap.add_argument("--out", default="final.mp4")
-    ap.add_argument("--tts", default="piper", choices=["piper", "say"],
-                    help="voiceover backend (piper = natural neural TTS)")
+    ap.add_argument("--tts", default="kokoro", choices=["kokoro", "piper", "say"],
+                    help="voiceover backend (kokoro = most natural; piper; say)")
+    ap.add_argument("--kokoro-voice", default="am_michael",
+                    help="kokoro voice (tts=kokoro), e.g. am_michael / am_fenrir / am_puck")
     ap.add_argument("--voice", default="Samantha", help="macOS `say` voice (tts=say)")
     ap.add_argument("--rate", default="172", help="say words-per-minute (tts=say)")
     ap.add_argument("--piper-voice", default="en_US-ryan-high",
@@ -81,7 +83,10 @@ def main():
             f.write(text)
         wav = os.path.join(workdir, f"{sc}.wav")
         raw = os.path.join(workdir, f"{sc}.raw.wav")
-        if args.tts == "piper":
+        if args.tts == "kokoro":
+            run([piper_py, os.path.join(ROOT, "kokoro_say.py"),
+                 "--voice", args.kokoro_voice, "--out", raw], input=text)
+        elif args.tts == "piper":
             run([piper_py, "-m", "piper", "-m", args.piper_voice,
                  "--data-dir", args.piper_dir, "-f", raw], input=text)
         else:

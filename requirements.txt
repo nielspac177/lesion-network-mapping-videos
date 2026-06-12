@@ -6,3 +6,6 @@ pycairo==1.29.0
 numpy==2.4.6
 piper-tts==1.4.2
 onnxruntime==1.26.0
+kokoro-onnx==0.5.0
+soundfile==0.14.0
+babel==2.18.0

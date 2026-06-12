@@ -1,18 +1,21 @@
-# ADR-0003: Piper neural TTS over macOS `say`
+# ADR-0003: Local neural TTS (Kokoro, with Piper as fallback)
 
-**Status**: Accepted · **Date**: 2026-06-12
+**Status**: Accepted (updated 2026-06-12) · **Date**: 2026-06-12
 
 ## Context
-The voiceover must sound natural and be reproducible on any machine. macOS `say`
-only had the basic "Samantha" voice installed (robotic); Enhanced/Premium voices
-require a manual GUI download and are macOS-only. Cloud TTS (ElevenLabs/OpenAI)
-sounds best but needs an API key, costs money, and isn't offline-reproducible.
+The voiceover must sound human and be reproducible on any machine. macOS `say` only
+had the basic "Samantha" voice (robotic). Cloud TTS (ElevenLabs, OpenAI) sounds best
+but needs an API key, costs money, and is not offline-reproducible. Piper is local and
+natural, but its male voices still sound synthetic on long technical narration.
 
 ## Decision
-Use **Piper** (`piper-tts`), a local neural TTS, with downloadable ONNX voices
-(`en_US-lessac-high`, `en_US-ryan-high`). `build_video.py --tts piper` is the
-default; `--tts say` remains a fallback.
+Use **Kokoro** (`kokoro-onnx`, model `kokoro-v1.0`) as the default narrator, voice
+`am_michael`. It is local, MIT-licensed, and clearly more human than Piper on this
+material. **Piper** stays as a fallback (`--tts piper`), and macOS `say` as a last
+resort (`--tts say`). `build_video.py --tts kokoro --kokoro-voice am_michael` is the
+default; `kokoro_say.py` does the synthesis.
 
 ## Consequences
-Good: natural, offline, reproducible, no key/cost; voice models fetched by
-`make voices`. Bad: ~100 MB per voice (git-ignored, downloaded on demand).
+Good: natural male narration, offline, no key/cost. Bad: Kokoro needs `espeak-ng` for
+phonemization and a ~310 MB model file (git-ignored, fetched by `make voices`). Other
+male voices to try: `am_fenrir`, `am_puck`.

@@ -53,9 +53,10 @@ make part0 QUAL=qh VOICE=en_US-ryan-high     # 1080p, male narrator
 
 `narration.py` holds the spoken lines. `scenes.py` holds the Manim code, and it
 imports the base class from `lnm_engine.py`. Manim renders each scene and turns the
-LaTeX into SVG through dvisvgm. Separately, Piper reads each scene's narration into a
-wav file. Then `build_video.py` puts the audio over the video, pads whichever one is
-shorter so the full narration always plays, and concatenates the scenes.
+LaTeX into SVG through dvisvgm. Separately, the neural voice (Kokoro by default,
+Piper as a fallback) reads each scene's narration into a wav file. Then
+`build_video.py` puts the audio over the video, pads whichever one is shorter so the
+full narration always plays, and concatenates the scenes.
 
 The sync matters more than it sounds. Each `play_beat()` call shows one line of
 narration as a subtitle and holds the screen for as long as that line takes to say.
@@ -85,10 +86,12 @@ if your x265 is 4.2 the loader can't find it. `render.sh` and `build_video.py` p
 
 ## Voices
 
-The series narrator is Piper's `en_US-ryan-high`, which you'll hear in
-`videos/part0_overview.mp4`. There's a female version, `en_US-lessac-high`, in
-`videos/part0_overview_lessac.mp4`. Swap with `VOICE=` or `--piper-voice`. Both run
-locally, so there's no API key and nothing leaves the machine.
+The series narrator is Kokoro's `am_michael`, a local neural voice that sounds
+clearly more human than the older Piper voices. You'll hear it in
+`videos/part0_overview.mp4`. Other male Kokoro voices worth trying are `am_fenrir`
+and `am_puck` (`--kokoro-voice`). Piper (`en_US-ryan-high`, `en_US-lessac-high`) is
+still supported with `--tts piper`. Everything runs locally, so there's no API key
+and nothing leaves the machine.
 
 ## How the chapters are written
 

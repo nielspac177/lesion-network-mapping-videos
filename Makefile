@@ -4,7 +4,8 @@
 MEDIA ?= $(HOME)/lnm_media
 QUAL  ?= qm
 QDIR  ?= 720p30
-VOICE ?= en_US-ryan-high
+TTS   ?= kokoro
+VOICE ?= am_michael          # kokoro voice; for piper use e.g. en_US-ryan-high
 PY    := ./.venv/bin/python
 
 OVERVIEW_SCENES := Scene1_TheMap Scene2_Backbone Scene3_Critique \
@@ -24,7 +25,10 @@ setup:
 	bash scripts/bootstrap.sh
 
 voices:
-	$(PY) -m piper.download_voices $(VOICE) --download-dir piper_voices
+	mkdir -p kokoro_models
+	curl -sL -o kokoro_models/kokoro-v1.0.onnx https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0/kokoro-v1.0.onnx
+	curl -sL -o kokoro_models/voices-v1.0.bin   https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0/voices-v1.0.bin
+	$(PY) -m piper.download_voices en_US-ryan-high en_US-lessac-high --download-dir piper_voices
 
 part0: part0-render part0-voice
 
@@ -32,12 +36,8 @@ part0-render:
 	./render.sh overview/scenes.py -q $(QUAL) $(OVERVIEW_SCENES)
 
 part0-voice:
-	$(PY) ../$(notdir $(CURDIR))/build_video.py \
-	  --media $(MEDIA) --quality $(QDIR) --script scenes \
-	  --narration overview.narration --tts piper --piper-voice $(VOICE) \
-	  --out videos/part0_overview.mp4 || \
 	python3 build_video.py --media $(MEDIA) --quality $(QDIR) --script scenes \
-	  --narration overview.narration --tts piper --piper-voice $(VOICE) \
+	  --narration overview.narration --tts $(TTS) --kokoro-voice $(VOICE) \
 	  --out videos/part0_overview.mp4
 
 test:
