@@ -20,6 +20,8 @@ def main():
     ap.add_argument("--voice", default="am_michael")
     ap.add_argument("--out", required=True)
     ap.add_argument("--speed", type=float, default=1.0)
+    ap.add_argument("--lang", default="en-us",
+                    help="language for phonemization, e.g. en-us, es, es-419")
     ap.add_argument("--model", default=os.path.join(ROOT, "kokoro_models", "kokoro-v1.0.onnx"))
     ap.add_argument("--voices", default=os.path.join(ROOT, "kokoro_models", "voices-v1.0.bin"))
     args = ap.parse_args()
@@ -29,7 +31,7 @@ def main():
 
     text = sys.stdin.read().strip()
     k = Kokoro(args.model, args.voices)
-    samples, sr = k.create(text, voice=args.voice, speed=args.speed, lang="en-us")
+    samples, sr = k.create(text, voice=args.voice, speed=args.speed, lang=args.lang)
     sf.write(args.out, samples, sr)
 
 

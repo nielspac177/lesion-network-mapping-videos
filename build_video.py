@@ -59,6 +59,10 @@ def main():
                     help="piper voice name (tts=piper)")
     ap.add_argument("--piper-dir", default=os.path.join(ROOT, "piper_voices"),
                     help="dir holding downloaded piper .onnx voices")
+    ap.add_argument("--lang", default="en-us",
+                    help="language for kokoro phonemization, e.g. en-us, es, es-419")
+    ap.add_argument("--kokoro-speed", default="1.0",
+                    help="kokoro speaking speed (1.0 normal; <1 slower, calmer)")
     ap.add_argument("scenes", nargs="*")
     args = ap.parse_args()
     piper_py = os.path.join(ROOT, ".venv", "bin", "python")
@@ -85,7 +89,8 @@ def main():
         raw = os.path.join(workdir, f"{sc}.raw.wav")
         if args.tts == "kokoro":
             run([piper_py, os.path.join(ROOT, "kokoro_say.py"),
-                 "--voice", args.kokoro_voice, "--out", raw], input=text)
+                 "--voice", args.kokoro_voice, "--lang", args.lang,
+                 "--speed", args.kokoro_speed, "--out", raw], input=text)
         elif args.tts == "piper":
             run([piper_py, "-m", "piper", "-m", args.piper_voice,
                  "--data-dir", args.piper_dir, "-f", raw], input=text)
