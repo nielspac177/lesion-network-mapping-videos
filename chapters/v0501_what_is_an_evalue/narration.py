@@ -64,7 +64,7 @@ SCENES = {
         ("The scale is direct. One dollar means you learned nothing. Twenty is this null is in trouble. Forty is in serious trouble.", 9.0),
         ("This is what a p-value never quite gives you: the payout is the evidence, in one number you can read off directly.", 8.5),
         ("And unlike a p-value, an e-value is a measure of accrued evidence you can keep multiplying as more data arrive.", 8.5),
-        ("Flip a biased coin again, multiply the new ratio onto the old. Ten heads in a row compounds to about fifty-eight.", 8.5),
+        ("Flip a biased coin again, multiply the new ratio onto the old. Ten heads in a row compounds to about fifty-seven point seven.", 8.5),
         ("That multiplication is honest. Peek whenever you like, stop whenever the evidence is strong, with no penalty for looking.", 8.5),
         ("That property, optional stopping, is where the real power lives, and it is exactly what the next chapter builds.", 8.0),
     ],

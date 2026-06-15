@@ -15,7 +15,7 @@ SCENES = {
     "S1_Hard": [
         ("Every e-value so far came from a bet we already knew how to write down: a likelihood ratio between two fully specified distributions.", 9.5),
         ("But that needs you to name the alternative in advance. What if your null is not a tidy point hypothesis, but a model with parameters to estimate?", 9.5),
-        ("The classical answer is the likelihood ratio test. Take the best free fit over the best null-allowed fit, then convert with a rule.", 9.0),
+        ("The classical answer is the likelihood ratio test. Here L is the likelihood, the product over your data of the density theta assigns; capital theta-naught is the null-allowed set of values. Take the best free fit over the best null-allowed fit, then convert with a rule.", 11.0),
         ("The rule is Wilks' theorem: two log of the ratio is approximately chi-square distributed, under H-naught. That gives you a p-value.", 9.0),
         ("But that rule is a large-sample, well-behaved-model promise. It assumes the likelihood is smooth in theta, and the true theta is not on the edge.", 9.5),
         ("Break any of those and chi-square is the wrong reference. Mixtures, a variance pinned at the boundary, a constrained space: the table prints a number, just the wrong one.", 10.0),

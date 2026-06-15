@@ -38,7 +38,7 @@ SCENES = {
         ("Why valid? Markov says the chance that E reaches one over alpha is at most alpha. So rejecting when E is at least one over alpha is a level-alpha test.", 10.0),
         ("Reading that as a number: one over E is the cut-off. Any alpha at or above one over E rejects; below it, you do not. Cap it at one, since a probability cannot exceed one.", 10.5),
         ("But it is conservative. A perfectly calibrated p-value hits its bound with equality; this one under-reports its own significance.", 9.5),
-        ("Watch it bite. A single point three null-standard-deviations out gives an e-value of about twelve point one eight.", 9.0),
+        ("Watch it bite. Take the likelihood-ratio e-value, a standard-normal null against a mean-one alternative, which works out to e to the X minus one half. A reading three null-standard-deviations out gives an e-value of about twelve point one eight.", 11.0),
         ("Translate: p equals the minimum of one and one over twelve point one eight, which is about zero point zero eight two. Not quite significant at five percent.", 9.5),
         ("Yet the exact normal p-value here is about zero point zero zero one three five. The e-value's verdict is sixty times more cautious.", 9.0),
         ("That gap is not a mistake. E-values pay for extra robustness: the conservative p stays valid even if the model is wrong, which the exact tail does not.", 10.0),

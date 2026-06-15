@@ -29,8 +29,8 @@ SCENES = {
         ("Each round you place a bet, the multiplier B sub s, a non-negative number computed from the data. B sub s equals one point three grows your pile thirty percent.", 10.0),
         ("The wealth is the product over s up to t of these bets. That product, starting from one dollar, is the test martingale W sub t.", 9.0),
         ("The one rule that makes a bet fair: under the null, E of B sub s given the past F sub s minus one is at most one. Conditionally break-even.", 10.0),
-        ("A concrete bet. Test whether a mean is mu-naught by staking B sub s equals one plus lambda sub s, times the quantity X sub s minus mu-naught.", 10.0),
-        ("Decode the bet fraction lambda sub s: how hard you bet this round, chosen from the past. The factor stays non-negative and fair when the data match the null.", 10.0),
+        ("The canonical bet is a likelihood ratio: B sub s equals q of X sub s over p of X sub s, where p is the null density and q is the rival you suspect.", 10.0),
+        ("Decode why it is fair. Average q over p under the null: the p in the denominator cancels the p in the weight, leaving the integral of q, which is one because q is a density.", 11.0),
         ("Multiply conditionally-fair bets and the product is a non-negative process with expectation at most one at every fixed round. That is the test martingale.", 9.5),
     ],
     # S3 — Ville's inequality, carefully
