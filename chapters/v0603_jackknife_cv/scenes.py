@@ -192,13 +192,21 @@ class S3_Floor(NarratedScene):
     def construct(self):
         self.header("The 1 − 2α floor")
 
-        # beat 1 — the theorem
+        # beat 1 — the theorem (decode every symbol on screen)
         thm = MathTex(r"\Pr\big(", "Y_{n+1}", r"\in", r"C_\alpha(X_{n+1})", r"\big)",
                       r"\ \geq\ ", "1-2\\alpha").scale(1.25).shift(UP * 1.4)
         thm[1].set_color(VAR); thm[3].set_color(BACK); thm[6].set_color(RES)
+        b_truth = Brace(thm[1], UP, color=VAR)
+        truth_lab = Text("new patient's truth", font_size=20, color=VAR).next_to(b_truth, UP, buff=0.12)
+        b_set = Brace(thm[3], DOWN, color=BACK)
+        set_lab = Text("the prediction set; the floor on the right",
+                       font_size=20, color=BACK).next_to(b_set, DOWN, buff=0.12)
         cap = Text("under exchangeability, for any symmetric base model",
-                   font_size=23, color=DIM).next_to(thm, DOWN, buff=0.3)
-        self.play_beat(Write(thm), FadeIn(cap))                                    # beat 1
+                   font_size=23, color=DIM).next_to(set_lab, DOWN, buff=0.3)
+        self.play_beat(Write(thm),
+                       GrowFromCenter(b_truth), FadeIn(truth_lab),
+                       GrowFromCenter(b_set), FadeIn(set_lab),
+                       FadeIn(cap))                                                 # beat 1
 
         # beat 2 — not 1-alpha; picture the residual matrix
         note = Text("one minus TWO alpha — not one minus alpha.\nwhere does the factor of two come from?",
@@ -206,7 +214,8 @@ class S3_Floor(NarratedScene):
         self.play_beat(FadeIn(note, shift=UP * 0.2))                               # beat 2
 
         # beat 3 — R_ij matrix definition
-        self.play(FadeOut(VGroup(thm, cap, note)), run_time=0.5)
+        self.play(FadeOut(VGroup(thm, b_truth, truth_lab, b_set, set_lab,
+                                 cap, note)), run_time=0.5)
         rij = MathTex("R_{ij}", "=", r"\text{miss of the model trained on all}", r"\ \text{except } j,",
                       r"\ \text{at point } i").scale(0.8)
         rij[0].set_color(EIG)

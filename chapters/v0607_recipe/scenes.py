@@ -90,16 +90,27 @@ class S2_ScoreChoice(NarratedScene):
                     font_size=30, color=RES).shift(UP * 2.5)
         self.play_beat(FadeIn(head))                                      # beat 1
 
-        # the guarantee is model-agnostic
+        # the guarantee is model-agnostic — decode every symbol on screen
         guar = MathTex(r"\Pr\big(", r"Y", r"\in", r"C(X)", r"\big)",
-                       r"\ge", r"1-\alpha").scale(1.1).shift(UP * 1.0)
+                       r"\ge", r"1-\alpha").scale(1.1).shift(UP * 1.2)
         guar[1].set_color(VAR); guar[3].set_color(VAR); guar[6].set_color(RES)
+        b_y = Brace(guar[1], DOWN, color=VAR)
+        l_y = Text("true label", font_size=20, color=VAR).next_to(b_y, DOWN, buff=0.12)
+        b_c = Brace(guar[3], UP, color=VAR)
+        l_c = Text("the prediction set", font_size=20, color=VAR).next_to(b_c, UP, buff=0.12)
+        b_a = Brace(guar[6], DOWN, color=RES)
+        l_a = Text("target coverage  (1 − miss rate α)", font_size=20, color=RES)\
+            .next_to(b_a, DOWN, buff=0.12)
         gcap = Text("holds for ANY symmetric model", font_size=24, color=BACK)\
-            .next_to(guar, DOWN, buff=0.3)
-        self.play_beat(Write(guar), FadeIn(gcap))                         # beat 2
+            .next_to(l_a, DOWN, buff=0.3)
+        self.play_beat(Write(guar), GrowFromCenter(b_y), FadeIn(l_y),
+                       GrowFromCenter(b_c), FadeIn(l_c),
+                       GrowFromCenter(b_a), FadeIn(l_a),
+                       FadeIn(gcap), lag_ratio=0.15)                       # beat 2
 
         # bad model -> vague, not wrong
-        self.play(FadeOut(VGroup(head, guar, gcap)), run_time=0.4)
+        self.play(FadeOut(VGroup(head, guar, gcap,
+                                 b_y, l_y, b_c, l_c, b_a, l_a)), run_time=0.4)
         vague = VGroup(
             Text("a bad model is not WRONG", font_size=28, color=WHITE),
             Text("it is only VAGUE", font_size=28, color=BAD),

@@ -63,24 +63,30 @@ class S1_Assumption(NarratedScene):
                         font_size=23, color=DIM).next_to(exch, DOWN, buff=0.3)
         self.play_beat(Write(exch), FadeIn(exch_cap))                       # beat 3
 
-        # uniform rank
+        # uniform rank  (label s_{n+1}: the strangeness / nonconformity score)
         rank = MathTex(r"\text{rank}(s_{n+1})", r"\ \sim\ ",
                        r"\text{Uniform}\{1,\dots,n+1\}").scale(0.95)
         rank[0].set_color(VAR); rank[2].set_color(BACK)
         rank.next_to(exch_cap, DOWN, buff=0.6)
-        self.play_beat(Write(rank))                                        # beat 4
+        b_s = Brace(rank[0], DOWN, color=VAR)
+        s_lab = Text("s : the new patient's strangeness (nonconformity) score",
+                     font_size=19, color=VAR).next_to(b_s, DOWN, buff=0.12)
+        self.play_beat(Write(rank), GrowFromCenter(b_s), FadeIn(s_lab))     # beat 4
 
-        # the coverage band that follows
+        # the coverage band that follows  (label alpha: the miscoverage level)
+        self.play(FadeOut(VGroup(b_s, s_lab)), run_time=0.3)
         band = MathTex(r"1-\alpha", r"\ \le\ ",
                        r"\Pr\big(Y_{n+1}\in C(X_{n+1})\big)", r"\ <\ ",
                        r"1-\alpha+\tfrac{1}{n+1}").scale(0.85)
         band[0].set_color(RES); band[2].set_color(WHITE); band[4].set_color(RES)
-        band.next_to(rank, DOWN, buff=0.5)
-        box = SurroundingRectangle(band, color=RES, buff=0.18)
-        self.play_beat(Write(band), Create(box))                           # beat 5
+        band.next_to(rank, DOWN, buff=0.45)
+        box = SurroundingRectangle(band, color=RES, buff=0.16)
+        a_lab = Text("alpha : the miscoverage level (alpha = 0.1 gives the 90% target)",
+                     font_size=18, color=DIM).next_to(box, DOWN, buff=0.15)
+        self.play_beat(Write(band), Create(box), FadeIn(a_lab))            # beat 5
 
         # break it: a stranger new patient
-        self.play(FadeOut(VGroup(zi, exch, exch_cap, rank, band, box)),
+        self.play(FadeOut(VGroup(zi, exch, exch_cap, rank, band, box, a_lab)),
                   run_time=0.5)
         break1 = VGroup(
             Text("calibrate at a GENTLE site,  deploy where lesions are BIGGER",
@@ -227,7 +233,9 @@ class S3_Weighted(NarratedScene):
         qcap = Text("smallest threshold whose weighted score-mass, plus p(n+1),\nreaches one-minus-alpha",
                     font_size=22, color=DIM, line_spacing=0.8)\
             .next_to(qhat, DOWN, buff=0.35)
-        self.play_beat(Write(qhat), FadeIn(qcap))                         # beat 5
+        sym = Text("s_i : calibration score    1{s_i <= t} : 1 if that score is at or below the threshold t",
+                   font_size=18, color=DIM).next_to(qcap, DOWN, buff=0.2)
+        self.play_beat(Write(qhat), FadeIn(qcap), FadeIn(sym))            # beat 5
 
         # why: rank-k probability is p_k
         rankp = MathTex(r"\Pr(\text{test at rank } k)", "=", "p_k")\
@@ -238,7 +246,7 @@ class S3_Weighted(NarratedScene):
         self.play_beat(Write(rankp), FadeIn(rcap))                        # beat 6
 
         # floor comes back
-        self.play(FadeOut(VGroup(qhat, qcap, rankp, rcap)), run_time=0.5)
+        self.play(FadeOut(VGroup(qhat, qcap, rankp, rcap, sym)), run_time=0.5)
         floor = Text("run the same below-threshold calculation with those\nnon-uniform rank probabilities  ->  the floor comes back",
                      font_size=26, color=WHITE, line_spacing=0.8).shift(UP * 1.4)
         self.play_beat(FadeIn(floor, shift=UP * 0.2))                     # beat 7

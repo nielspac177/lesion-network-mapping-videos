@@ -4,7 +4,7 @@ Five narrated scenes. Generalize from coverage (a 0/1 miscoverage loss) to any
 monotone, bounded loss; define the risk R(lambda) = E[L_lambda] and its
 monotonicity; state the conformal-risk-control selection rule with the finite-
 sample cushion (Angelopoulos, Bates, Fisch, Lei & Schuster, ICLR 2024); state the
-guarantee E[L_lambda-hat] <= alpha with coverage as the special case; and work the
+guarantee E[L_lambda-hat] <= beta with coverage as the special case; and work the
 FNR operating-point example by hand.
 
 All equations/numbers are quoted from:
@@ -88,8 +88,8 @@ class S1_Beyond(NarratedScene):
         ).arrange(DOWN, buff=0.2).next_to(gen_cap, DOWN, buff=0.55)
         self.play_beat(FadeIn(fnr, lag_ratio=0.2))                         # beat 6
 
-        # the goal: hold E[FNR] <= alpha
-        goal = MathTex(r"\mathbb E[\mathrm{FNR}]", r"\leq", r"\alpha")\
+        # the goal: hold E[FNR] <= beta
+        goal = MathTex(r"\mathbb E[\mathrm{FNR}]", r"\leq", r"\beta")\
             .scale(1.2).to_edge(DOWN, buff=0.7)
         goal[0].set_color(RES); goal[2].set_color(EIG)
         self.play_beat(Write(goal))                                        # beat 7
@@ -215,13 +215,13 @@ class S3_Calibrate(NarratedScene):
         noisy = VGroup(
             Text("but  R-hat-n  is a NOISY estimate of the true risk",
                  font_size=25, color=BAD),
-            Text("stop where it just equals alpha → overshoot ~half the time",
+            Text("stop where it just equals beta → overshoot ~half the time",
                  font_size=23, color=DIM),
         ).arrange(DOWN, buff=0.22).shift(UP * 0.4)
         self.play_beat(FadeIn(noisy[0]), FadeIn(noisy[1], shift=UP * 0.2)) # beat 4
 
         # the cushion ~ 1/n
-        cushion = MathTex(r"\text{cushion}", "=", r"\frac{1-\alpha}{n}",
+        cushion = MathTex(r"\text{cushion}", "=", r"\frac{1-\beta}{n}",
                           r"\ \sim\ ", r"\frac{1}{n}").scale(1.05)\
             .next_to(noisy, DOWN, buff=0.55)
         cushion[2].set_color(BACK); cushion[4].set_color(BACK)
@@ -231,12 +231,12 @@ class S3_Calibrate(NarratedScene):
         self.play(FadeOut(VGroup(noisy, cushion)), run_time=0.5)
         rule = MathTex(r"\hat\lambda", "=", r"\sup\Big\{",
                        r"\lambda", ":", r"\hat R_n(\lambda)", r"\leq",
-                       r"\alpha - \tfrac{1-\alpha}{n}", r"\Big\}")\
+                       r"\beta - \tfrac{1-\beta}{n}", r"\Big\}")\
             .scale(0.95).shift(UP * 0.2)
         rule[0].set_color(EIG); rule[3].set_color(EIG); rule[5].set_color(RES)
         rule[7].set_color(BACK)
         br = Brace(rule[7], DOWN, color=BACK)
-        br_lab = Text("conservative target = alpha minus the cushion",
+        br_lab = Text("conservative target = beta minus the cushion",
                       font_size=22, color=BACK).next_to(br, DOWN, buff=0.2)
         self.play_beat(Write(rule), GrowFromCenter(br), FadeIn(br_lab))    # beat 6
 
@@ -253,7 +253,7 @@ class S3_Calibrate(NarratedScene):
         self.play(FadeOut(price), run_time=0.4)
         drop = VGroup(
             Text("drop the cushion → tune to calibration NOISE", font_size=24, color=BAD),
-            Text("reported miss rate sits at alpha, true rate drifts ABOVE it",
+            Text("reported miss rate sits at beta, true rate drifts ABOVE it",
                  font_size=23, color=DIM),
         ).arrange(DOWN, buff=0.22).next_to(rule, DOWN, buff=0.8)
         self.play_beat(FadeIn(drop[0]), FadeIn(drop[1], shift=UP * 0.2))   # beat 8
@@ -285,7 +285,7 @@ class S4_Guarantee(NarratedScene):
         # the theorem
         self.play(FadeOut(VGroup(intro, exch, exch_lab, only)), run_time=0.5)
         thm = MathTex(r"\mathbb E\big[", "L_{\\hat\\lambda}", "(X_{n+1}, Y_{n+1})",
-                      r"\big]", r"\leq", r"\alpha").scale(1.25).shift(UP * 1.0)
+                      r"\big]", r"\leq", r"\beta").scale(1.25).shift(UP * 1.0)
         thm[1].set_color(RES); thm[2].set_color(VAR); thm[5].set_color(EIG)
         box = SurroundingRectangle(thm, color=RES, buff=0.25)
         self.play_beat(Write(thm), Create(box))                            # beat 3
@@ -298,8 +298,8 @@ class S4_Guarantee(NarratedScene):
 
         # tight to O(1/n)
         self.play(FadeOut(VGroup(br, br_lab)), run_time=0.4)
-        tight = MathTex(r"\alpha", r"\ \leq\ ", r"\mathbb E[L_{\hat\lambda}]",
-                        r"\ \leq\ ", r"\alpha + O\!\left(\tfrac{1}{n}\right)")\
+        tight = MathTex(r"\beta", r"\ \leq\ ", r"\mathbb E[L_{\hat\lambda}]",
+                        r"\ \leq\ ", r"\beta + O\!\left(\tfrac{1}{n}\right)")\
             .scale(1.0).next_to(box, DOWN, buff=0.6)
         tight[0].set_color(EIG); tight[2].set_color(RES); tight[4].set_color(BACK)
         tight_cap = Text("tight to order one over n",
@@ -359,16 +359,16 @@ class S5_FNR(NarratedScene):
                      font_size=23, color=DIM).next_to(scores, DOWN, buff=0.3)
         self.play_beat(Write(scores), FadeIn(n_cap))                       # beat 2
 
-        # choose alpha
-        alpha = MathTex(r"\alpha", "=", "0.2").scale(1.2)\
+        # choose beta (the risk ceiling)
+        beta = MathTex(r"\beta", "=", "0.2").scale(1.2)\
             .next_to(n_cap, DOWN, buff=0.5)
-        alpha[0].set_color(EIG); alpha[2].set_color(EIG)
+        beta[0].set_color(EIG); beta[2].set_color(EIG)
         a_cap = Text("willing to miss at most 20% of true events",
-                     font_size=23, color=DIM).next_to(alpha, DOWN, buff=0.25)
-        self.play_beat(Write(alpha), FadeIn(a_cap))                        # beat 3
+                     font_size=23, color=DIM).next_to(beta, DOWN, buff=0.25)
+        self.play_beat(Write(beta), FadeIn(a_cap))                         # beat 3
 
         # the cushion -> conservative target
-        self.play(FadeOut(VGroup(intro, alpha, a_cap)),
+        self.play(FadeOut(VGroup(intro, beta, a_cap)),
                   scores.animate.scale(0.85).to_edge(UP, buff=1.0),
                   n_cap.animate.scale(0.85).next_to(scores, DOWN, buff=0.2)
                   .set_y(scores.get_y() - 0.55),
@@ -409,7 +409,7 @@ class S5_FNR(NarratedScene):
         # closing: tighter ceiling -> set grows
         self.play(FadeOut(VGroup(lamhat, box, op, scores, n_cap)), run_time=0.5)
         close = VGroup(
-            Text("tighten the ceiling alpha", font_size=26, color=EIG),
+            Text("tighten the ceiling beta", font_size=26, color=EIG),
             Text("↓", font_size=28, color=DIM),
             Text("threshold drops to catch more people", font_size=26, color=WHITE),
             Text("↓", font_size=28, color=DIM),

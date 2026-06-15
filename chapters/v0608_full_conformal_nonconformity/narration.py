@@ -36,8 +36,8 @@ SCENES = {
     # S3 — coverage by symmetry
     "S3_Coverage": [
         ("Why does this cover the truth at least one minus alpha of the time? The answer is symmetry, and it is the same rank argument as split conformal, now using every point.", 10.0),
-        ("Run the loop at the candidate that happens to be the true label, y test. Then the augmented set is the real data: the n calibration points plus the genuine test point.", 10.0),
-        ("Those n plus one points are exchangeable: their joint distribution is unchanged by any reordering. Order carries no information about which point is the test point.", 10.0),
+        ("Run the loop at the true label, y test. The augmented set is then the real data: the n calibration patients plus the test patient. Each Z here is one patient.", 10.0),
+        ("Those n plus one patients are exchangeable: their joint law is unchanged by any reordering pi. The symbol equals-d means same distribution. Order carries no information about which point is the test point.", 10.5),
         ("And the score is computed by one fixed, symmetric function of the whole augmented set. Because the refit used all points together, it has no privileged view of the test point.", 10.5),
         ("Exchangeable points give exchangeable scores, and exchangeable scores give an exchangeable rank. So the test score s sub test is equally likely to land in any of the n plus one positions.", 10.5),
         ("That makes the rank r uniform on one through n plus one. The probability that r equals any particular position is exactly one over n plus one.", 9.5),

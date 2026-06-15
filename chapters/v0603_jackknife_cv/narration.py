@@ -34,7 +34,7 @@ SCENES = {
     ],
     # S3 — The 1-2alpha floor
     "S3_Floor": [
-        ("Now the guarantee. Under exchangeability, the jackknife-plus set covers the truth with probability at least one minus two alpha.", 9.0),
+        ("Now the guarantee. Under exchangeability, the new patient's truth, Y sub n plus one, lands in the prediction set C alpha with probability at least one minus two alpha.", 9.0),
         ("Note: one minus two alpha, not one minus alpha. Where does the factor of two come from? Picture a square matrix of out-of-sample residuals.", 9.5),
         ("Entry R i j is how badly the model trained on everyone except j predicts point i. On the diagonal, that is the ordinary leave-one-out residual.", 10.0),
         ("Exchangeability makes this matrix invariant under swapping rows and columns together, so the pattern of large entries is symmetric across patients.", 9.5),

@@ -8,10 +8,10 @@ Each scene maps to an ordered list of beats. Each beat is (text, seconds): the
 text is the subtitle in manim AND the spoken line. The number of
 play_beat()/wait_beat() calls in the matching scene MUST equal len(beats).
 
-Numbers are spelled for TTS. lambda-hat is read as "lambda-hat", alpha as
-"alpha", and so on. The chapter's source uses beta for the ceiling in its worked
-example; we keep the source's alpha-level framing in the title cards but speak
-the symbol as it appears on screen.
+Numbers are spelled for TTS. lambda-hat is read as "lambda-hat", beta as
+"beta", and so on. Following the source, the risk CEILING is beta throughout;
+alpha is reserved for the coverage miscoverage level (one minus alpha) in the
+coverage special case, exactly as the source writes it.
 """
 
 SCENES = {
@@ -29,7 +29,7 @@ SCENES = {
          9.0),
         ("Our running example is the false-negative rate in a multilabel flag: of all patients who truly have the event, what fraction do we miss?",
          9.5),
-        ("We will pick a procedure that holds that expected miss rate below a level we choose, call it alpha, no matter which model we used.",
+        ("We will pick a procedure that holds that expected miss rate below a level we choose, call it beta, no matter which model we used.",
          9.5),
     ],
     # S2 — The risk function R(lambda)
@@ -59,15 +59,15 @@ SCENES = {
          8.5),
         ("As lambda rises, this empirical miss rate climbs. We want the largest, strictest lambda whose risk we can still certify safe.",
          9.0),
-        ("But the empirical rate is a noisy estimate. If we stop where it just equals alpha, we overshoot by chance about half the time.",
+        ("But the empirical rate is a noisy estimate. If we stop where it just equals beta, we overshoot by chance about half the time.",
          9.0),
         ("So conformal risk control, due to Angelopoulos and colleagues, adds a finite-sample cushion that shrinks like one over n.",
          9.0),
-        ("The rule: lambda-hat is the supremum over lambda such that R-hat-n of lambda is at most alpha minus the quantity one minus alpha over n.",
+        ("The rule: lambda-hat is the supremum over lambda such that R-hat-n of lambda is at most beta minus the quantity one minus beta over n.",
          10.0),
-        ("That cushion, one minus alpha over n, is the whole price of honesty. At ten patients it is real; at a hundred it nearly vanishes.",
+        ("That cushion, one minus beta over n, is the whole price of honesty. At ten patients it is real; at a hundred it nearly vanishes.",
          9.5),
-        ("Drop the cushion and you tune the threshold to your calibration noise. Your reported miss rate sits at alpha while the true one drifts above it.",
+        ("Drop the cushion and you tune the threshold to your calibration noise. Your reported miss rate sits at beta while the true one drifts above it.",
          9.5),
     ],
     # S4 — The guarantee
@@ -76,11 +76,11 @@ SCENES = {
          8.0),
         ("Assume the calibration patients and the test patient are exchangeable: interchangeable in order, the only assumption beyond a monotone loss.",
          9.5),
-        ("Then the expected loss at the selected threshold, on a fresh point, the expectation of L at lambda-hat for patient n plus one, is at most alpha.",
+        ("Then the expected loss at the selected threshold, on a fresh point, the expectation of L at lambda-hat for patient n plus one, is at most beta.",
          10.0),
         ("The expectation runs over both the calibration draw and the new patient. The cushion absorbs the one-patient slack from not knowing the true risk.",
          9.5),
-        ("That is why the bound is tight to order one over n: you cannot do better than alpha plus order one over n, and you never do worse than alpha.",
+        ("That is why the bound is tight to order one over n: you cannot do better than beta plus order one over n, and you never do worse than beta.",
          9.5),
         ("There is no distributional assumption. Any base model p-hat works, and it holds at the actual n you have, not asymptotically.",
          9.0),
@@ -95,7 +95,7 @@ SCENES = {
          9.0),
         ("Ten patients truly had the event. Sorted, their out-of-fold predicted risks run from zero-point-one-two up to zero-point-nine-zero.",
          9.0),
-        ("Choose alpha equals zero-point-two: we are willing to miss at most twenty percent of true events in expectation.",
+        ("Choose beta equals zero-point-two: we are willing to miss at most twenty percent of true events in expectation.",
          8.5),
         ("The cushion is one minus zero-point-two over ten, which is zero-point-zero-eight. So the conservative target is zero-point-two minus zero-point-zero-eight, zero-point-one-two.",
          10.0),

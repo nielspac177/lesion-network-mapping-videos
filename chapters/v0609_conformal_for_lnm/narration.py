@@ -55,7 +55,7 @@ SCENES = {
     # S5 — the exchangeability caveat
     "S5_Exchange": [
         ("Every guarantee has a price, and conformal's price is exactly one assumption: exchangeability of the patients.", 8.5),
-        ("Exchangeability means order carries no information. Shuffle the patients and the world looks the same; no patient is special by virtue of when they arrived.", 9.5),
+        ("Exchangeability means order carries no information. The joint law of the patient pairs Z is unchanged under any reordering pi. Shuffle the patients and the world looks the same; no patient is special by when they arrived.", 11.0),
         ("It is weaker than independent and identically distributed, and crucially it must include the new patient. The promise covers the test patient only because it is just another draw from the same pot.", 10.0),
         ("So the moment the new patient comes from a different pot, the assumption breaks. A new scanner, a sicker site, a drifted technique. That is distribution shift.", 9.5),
         ("This is the failure we measured back in Vol six chapter six. Coverage degrades, and conformal will not warn you. It is fragile, and it is about your data, not your model.", 9.5),

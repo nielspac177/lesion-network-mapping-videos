@@ -21,7 +21,7 @@ SCENES = {
     # S2 — choosing the score: efficiency, not validity
     "S2_ScoreChoice": [
         ("Now the most surprising fact in conformal prediction. The score you choose controls how big your sets are, not whether they are valid.", 9.5),
-        ("Coverage is guaranteed for any model that treats its training points symmetrically. The base model cannot make you wrong.", 9.0),
+        ("This is the guarantee. The probability that the true label Y lands in the prediction set C-of-X is at least one minus alpha, the target coverage, where alpha is the miss rate you allow. It holds for any model that treats its training points symmetrically.", 11.0),
         ("It can only make you vague. A bad model still hits ninety percent coverage. It just outputs the full set, both labels, every time.", 9.5),
         ("That full set, A E-positive and A E-negative together, is valid and completely worthless. It never commits to anything.", 9.0),
         ("So a better model does not buy you more validity. Validity is already free. A better model buys you tighter, sharper sets.", 9.5),

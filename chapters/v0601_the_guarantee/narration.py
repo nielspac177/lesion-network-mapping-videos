@@ -19,7 +19,7 @@ SCENES = {
         ("Conformal prediction makes one promise, and we had better get it exactly right. Instead of a single number, it hands you a set.", 9.0),
         ("For a binary adverse event, that set is one of three things: just no-event, just event, or the hedge containing both labels.", 9.0),
         ("Here is the guarantee. The probability that the true label Y lands inside the predicted set C-of-X is at least one minus alpha.", 9.5),
-        ("Decode the pieces. C-of-X is the prediction set the procedure outputs for a new patient with features X. It is a set of candidate labels, not a point.", 9.5),
+        ("Decode the pieces. Y is the true label, no-event or event. C-of-X is the prediction set the procedure outputs for a new patient with features X: a set of candidate labels, not a point.", 9.5),
         ("Alpha is the miscoverage level you choose. Pick alpha equals zero-point-one, and one minus alpha is zero-point-nine: your target is ninety percent coverage.", 9.5),
         ("And the probability is over the whole draw of patients. The promise: at least ninety percent of the time, the truth is inside the set you reported.", 9.0),
         ("You aim for ninety, you get at least ninety. That floor is the headline of this whole volume. Call it K-one.", 8.0),

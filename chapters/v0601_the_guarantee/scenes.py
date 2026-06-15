@@ -51,16 +51,20 @@ class S1_Promise(NarratedScene):
         eq[2].set_color(VAR); eq[4].set_color(VAR); eq[7].set_color(RES)
         self.play_beat(Write(eq))                                           # beat 3
 
-        # decode C(X)
+        # decode Y and C(X)
+        brace_y = Brace(eq[2], UP, color=VAR)
+        y_lab = Text("Y = the true label (AE− or AE+)",
+                     font_size=22, color=VAR).next_to(brace_y, UP, buff=0.15)
         brace_c = Brace(eq[4], DOWN, color=VAR)
         c_lab = Text("the prediction SET for a new patient with features X\n"
                      "a set of candidate labels, not a point",
                      font_size=22, color=VAR, line_spacing=0.8)\
             .next_to(brace_c, DOWN, buff=0.2)
-        self.play_beat(GrowFromCenter(brace_c), FadeIn(c_lab))              # beat 4
+        self.play_beat(GrowFromCenter(brace_y), FadeIn(y_lab),
+                       GrowFromCenter(brace_c), FadeIn(c_lab))              # beat 4
 
         # decode alpha
-        self.play(FadeOut(VGroup(brace_c, c_lab)), run_time=0.4)
+        self.play(FadeOut(VGroup(brace_y, y_lab, brace_c, c_lab)), run_time=0.4)
         alpha_eq = MathTex(r"\alpha = 0.1", r"\ \Rightarrow\ ",
                            r"1-\alpha = 0.9", r"\ =\ ",
                            r"90\%\ \text{target}").scale(1.0)

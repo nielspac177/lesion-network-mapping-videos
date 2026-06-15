@@ -275,7 +275,10 @@ class S4_BeatBaseline(NarratedScene):
         deg = MathTex(r"\hat{y}^{\,\mathrm{deg}}_i", "=",
                       "a", "+", "b\\,(u_1^\\top \\ell_i)", "+", "c\\,s_i").scale(0.62)
         deg[0].set_color(BAD); deg[4].set_color(BAD); deg[6].set_color(VAR)
-        m2 = self._model_box("Model 2 — degree + size", None, BAD, eq=deg)
+        leg = Text("u_1 transpose l: seed's loading on the leading component   ·   "
+                   "s_i: lesion size   ·   a, b, c: fit coefficients",
+                   font_size=15, color=DIM)
+        m2 = self._model_box("Model 2 — degree + size", None, BAD, eq=deg, legend=leg)
         m2.shift(RIGHT * 3.3 + DOWN * 0.6)
         self.play_beat(FadeIn(m2, shift=UP * 0.2))                         # beat 5
 
@@ -304,15 +307,19 @@ class S4_BeatBaseline(NarratedScene):
                     font_size=21, color=DIM).next_to(nums, DOWN, buff=0.25)
         self.play_beat(FadeIn(verdict, lag_ratio=0.3), Write(nums), FadeIn(ncap))  # beat 7
 
-    def _model_box(self, title, body, color, eq=None):
+    def _model_box(self, title, body, color, eq=None, legend=None):
         box = RoundedRectangle(width=5.4, height=2.2, corner_radius=0.15,
                                stroke_color=color, stroke_width=2.5,
                                fill_color=color, fill_opacity=0.10)
         t = Text(title, font_size=22, color=color).next_to(box.get_top(), DOWN, buff=0.25)
         inner = eq if eq is not None else Text(body, font_size=20, color=WHITE,
                                                line_spacing=0.8)
-        inner.move_to(box).shift(DOWN * 0.2)
-        return VGroup(box, t, inner)
+        inner.move_to(box).shift(UP * 0.05)
+        grp = VGroup(box, t, inner)
+        if legend is not None:
+            legend.scale_to_fit_width(box.width - 0.4).next_to(inner, DOWN, buff=0.18)
+            grp.add(legend)
+        return grp
 
 
 # ----------------------------------------------------------------------
@@ -336,12 +343,16 @@ class S5_Exchange(NarratedScene):
         ex = MathTex(r"(Z_1,\dots,Z_{n+1})", r"\;\stackrel{d}{=}\;",
                      r"(Z_{\pi(1)},\dots,Z_{\pi(n+1)})").scale(0.95).shift(UP * 1.3)
         ex[0].set_color(VAR); ex[2].set_color(VAR)
-        ex_cap = Text("order carries NO information:\nshuffle the patients, the world looks the same",
-                      font_size=23, color=WHITE, line_spacing=0.8).next_to(ex, DOWN, buff=0.4)
-        self.play_beat(Write(ex), FadeIn(ex_cap))                          # beat 2
+        b_eqd = Brace(ex[1], UP, color=EIG)
+        eqd_l = Text("same distribution", font_size=18, color=EIG).next_to(b_eqd, UP, buff=0.1)
+        ex_cap = Text("Z_i: patient i's pair (from Scene 1).  pi: any reordering of the patients.\n"
+                      "order carries NO information — shuffle the patients, the world looks the same",
+                      font_size=21, color=WHITE, line_spacing=0.8).next_to(ex, DOWN, buff=0.45)
+        self.play_beat(Write(ex), GrowFromCenter(b_eqd), FadeIn(eqd_l),
+                       FadeIn(ex_cap))                                      # beat 2
 
         # includes the new patient, weaker than iid
-        self.play(FadeOut(VGroup(ex, ex_cap)), run_time=0.4)
+        self.play(FadeOut(VGroup(ex, ex_cap, b_eqd, eqd_l)), run_time=0.4)
         notes = VGroup(
             Text("weaker than i.i.d.", font_size=25, color=BACK),
             Text("and it must include the NEW patient", font_size=25, color=RES),

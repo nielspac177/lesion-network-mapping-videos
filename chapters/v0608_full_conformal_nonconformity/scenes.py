@@ -105,14 +105,19 @@ class S2_Procedure(NarratedScene):
         aug = MathTex(r"\mathcal{D}", r"\ \cup\ ", r"\{(x_{\text{test}},\, y)\}")\
             .scale(1.25).shift(UP * 1.4)
         aug[0].set_color(VAR); aug[2].set_color(EIG)
+        b_data = Brace(aug[0], UP, color=VAR)
+        l_data = Text("D = all the patients we already hold",
+                      font_size=20, color=VAR).next_to(b_data, UP, buff=0.12)
         b_aug = Brace(aug[2], DOWN, color=EIG)
         l_aug = Text("pretend candidate y is the truth, add the pair",
                      font_size=22, color=EIG).next_to(b_aug, DOWN, buff=0.15)
-        self.play_beat(Write(aug), GrowFromCenter(b_aug), FadeIn(l_aug),
+        self.play_beat(Write(aug),
+                       GrowFromCenter(b_data), FadeIn(l_data),
+                       GrowFromCenter(b_aug), FadeIn(l_aug),
                        intro.animate.set_opacity(0.4))                     # beat 2
 
         # refit on n+1 points -> f-hat-y
-        self.play(FadeOut(VGroup(b_aug, l_aug)), run_time=0.4)
+        self.play(FadeOut(VGroup(b_data, l_data, b_aug, l_aug)), run_time=0.4)
         refit = MathTex(r"\text{refit on } n+1 \text{ points}",
                         r"\ \longrightarrow\ ", r"\hat{f}_y")\
             .scale(1.05).next_to(aug, DOWN, buff=0.7)
@@ -172,7 +177,7 @@ class S3_Coverage(NarratedScene):
     def construct(self):
         self.header("Coverage by symmetry")
 
-        claim = Text("why coverage ≥ 1 − alpha, using EVERY point",
+        claim = Text("why coverage is at least 1 minus alpha, using EVERY point",
                      font_size=28, color=RES).shift(UP * 2.6)
         self.play_beat(FadeIn(claim))                                     # beat 1
 
@@ -191,8 +196,9 @@ class S3_Coverage(NarratedScene):
                        r"(Z_{\pi(1)},\dots,Z_{\pi(n+1)})")\
             .scale(1.0).shift(UP * 1.5)
         exch[0].set_color(VAR); exch[2].set_color(VAR)
-        ecap = Text("exchangeable: any reordering has the same law\norder carries no information",
-                    font_size=23, color=DIM, line_spacing=0.8)\
+        ecap = Text("Z are the patients;  pi is any reordering;  =d means same distribution\n"
+                    "exchangeable: any reordering has the same law — order carries no information",
+                    font_size=21, color=DIM, line_spacing=0.8)\
             .next_to(exch, DOWN, buff=0.3)
         self.play_beat(Write(exch), FadeIn(ecap))                         # beat 3
 
@@ -409,8 +415,12 @@ class S6_Takeaway(NarratedScene):
                     font_size=22, color=DIM).next_to(cover, DOWN, buff=0.2)
         self.play_beat(Write(cover), FadeIn(ccap))                       # beat 3
 
-        any_score = Text("✓  any score: |y−ŷ|,  |y−ŷ|/σ̂(x),  signed CQR",
-                         font_size=25, color=VAR).next_to(ccap, DOWN, buff=0.45)
+        any_score = VGroup(
+            Text("any score:", font_size=25, color=VAR),
+            MathTex(r"\lvert y-\hat{y}\rvert,\ \ "
+                    r"\frac{\lvert y-\hat{y}\rvert}{\hat{\sigma}(x)},\ \ "
+                    r"\text{signed CQR}").scale(0.8).set_color(VAR),
+        ).arrange(RIGHT, buff=0.3).next_to(ccap, DOWN, buff=0.45)
         rv = Text("validity rides the rank, sharpness rides the score",
                   font_size=22, color=DIM).next_to(any_score, DOWN, buff=0.2)
         self.play_beat(FadeIn(any_score), FadeIn(rv))                    # beat 4
